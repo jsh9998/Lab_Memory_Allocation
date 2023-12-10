@@ -75,10 +75,8 @@ struct MEMORY_BLOCK first_fit_allocate(int request_size, struct MEMORY_BLOCK mem
     {
         if ((memory_map[x].segment_size >= request_size) && (memory_map[x].process_id == 0))
         {
-            if (blockIndex == -1)
-            {
-                blockIndex = x;
-            }
+            blockIndex = x;
+            break;
         }
     }
 
