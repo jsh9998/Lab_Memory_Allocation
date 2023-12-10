@@ -227,7 +227,7 @@ void release_memory(struct MEMORY_BLOCK freed_block, struct MEMORY_BLOCK memory_
     }
 
     // Merging with memory after the freed blockindex
-    if (memory_map[blockIndex + 1].process_id == 0 && blockIndex<*map_cnt>)
+    if (memory_map[blockIndex + 1].process_id == 0 && blockIndex < *map_cnt)
     {
         memory_map[blockIndex].end_address = memory_map[blockIndex + 1].end_address;
         memory_map[blockIndex].segment_size = memory_map[blockIndex + 1].segment_size + memory_map[blockIndex].segment_size;
