@@ -196,6 +196,46 @@ struct MEMORY_BLOCK next_fit_allocate(int request_size, struct MEMORY_BLOCK memo
     memory_map[blockIndex].process_id = process_id;
     return memory_map[blockIndex];
 };
-void release_memory(struct MEMORY_BLOCK freed_block, struct MEMORY_BLOCK memory_map[MAPMAX], int *map_cnt){
+void release_memory(struct MEMORY_BLOCK freed_block, struct MEMORY_BLOCK memory_map[MAPMAX], int *map_cnt)
+{
 
+    int blockIndex = -1;
+    // Find map index of freed block
+    for (int x = 0; x < *map_cnt; x++)
+    {
+        if (memory_map[x].start_address == freed_block.start_address)
+        {
+            blockIndex = x;
+            break;
+        }
+    }
+    // Set memory as available
+    freed_block.process_id = 0;
+
+    // Merging with memory before the freed blockindex
+    if (memory_map[blockIndex - 1].process_id == 0 && blockIndex >= 1)
+    {
+        blockIndex--;
+        memory_map[blockIndex].end_address = memory_map[blockIndex + 1].end_address;
+        memory_map[blockIndex].segment_size = memory_map[blockIndex + 1].segment_size + memory_map[blockIndex].segment_size;
+
+        (*map_cnt)--;
+        for (int x = blockIndex + 1; x < *map_cnt; x++)
+        {
+            memory_map[x] = memory_map[x + 1];
+        }
+    }
+
+    // Merging with memory after the freed blockindex
+    if (memory_map[blockIndex + 1].process_id == 0 && blockIndex<*map_cnt>)
+    {
+        memory_map[blockIndex].end_address = memory_map[blockIndex + 1].end_address;
+        memory_map[blockIndex].segment_size = memory_map[blockIndex + 1].segment_size + memory_map[blockIndex].segment_size;
+
+        (*map_cnt)--;
+        for (int x = blockIndex + 1; x < *map_cnt; x++)
+        {
+            memory_map[x] = memory_map[x + 1];
+        }
+    }
 };
