@@ -24,12 +24,12 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
 
     for (int x = 0; x < *map_cnt; x++)
     {
-        if (request_size == memory_map[x].segment_size && memory_map[x].process_id == 0)
+        if ((request_size == memory_map[x].segment_size) && (memory_map[x].process_id == 0))
         {
             memory_map[x].process_id = process_id;
             return memory_map[x];
         }
-        else if (request_size < memory_map[x].segment_size && memory_map[x].process_id == 0)
+        else if ((request_size < memory_map[x].segment_size) && (memory_map[x].process_id == 0))
         {
 
             struct MEMORY_BLOCK newBlock;
