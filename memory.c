@@ -58,10 +58,10 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
 
         memory_map[blockIndex + 1] = newBlock;
         memory_map[blockIndex].end_address = memory_map[blockIndex].start_address + request_size - 1;
-        memory_map[blockIndex].process_id = process_id;
         memory_map[blockIndex].segment_size = request_size;
     }
 
+    memory_map[blockIndex].process_id = process_id;
     return memory_map[blockIndex];
 };
 struct MEMORY_BLOCK first_fit_allocate(int request_size, struct MEMORY_BLOCK memory_map[MAPMAX], int *map_cnt, int process_id){
