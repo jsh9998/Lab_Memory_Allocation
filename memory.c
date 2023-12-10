@@ -21,6 +21,7 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
 {
 
     struct MEMORY_BLOCK NULLBLOCK;
+    struct MEMORY_BLOCK newBlock;
 
     for (int x = 0; x < *map_cnt; x++)
     {
@@ -32,7 +33,6 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
         else if ((request_size < memory_map[x].segment_size) && (memory_map[x].process_id == 0))
         {
 
-            struct MEMORY_BLOCK newBlock;
             newBlock.process_id = 0;
             newBlock.end_address = memory_map[x].end_address;
             memory_map[x].end_address = memory_map[x].start_address + request_size - 1;
