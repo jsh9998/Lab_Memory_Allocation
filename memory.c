@@ -46,18 +46,20 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
     // Split the block if needed
     if (memory_map[blockIndex].segment_size > request_size)
     {
+        (*map_cnt)++;
+        for (int x = blockIndex + 2; x < *map_cnt; x++)
+        {
+            memory_map[x] = memory_map[x - 1];
+        }
         newBlock.process_id = 0;
+        newBlock.start_address = memory_map[blockIndex].start_address + request_size;
         newBlock.end_address = memory_map[blockIndex].end_address;
+        newBlock.segment_size = memory_map[blockIndex].segment_size - request_size;
+
+        memory_map[blockIndex + 1] = newBlock;
         memory_map[blockIndex].end_address = memory_map[blockIndex].start_address + request_size - 1;
         memory_map[blockIndex].process_id = process_id;
         memory_map[blockIndex].segment_size = request_size;
-
-        int excessMemory = memory_map[blockIndex].segment_size - request_size;
-        newBlock.segment_size = excessMemory;
-        newBlock.start_address = memory_map[blockIndex].end_address + 1;
-
-        memory_map[*map_cnt] = newBlock;
-        (*map_cnt)++;
     }
 
     return memory_map[blockIndex];
