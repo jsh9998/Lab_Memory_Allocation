@@ -210,7 +210,7 @@ void release_memory(struct MEMORY_BLOCK freed_block, struct MEMORY_BLOCK memory_
         }
     }
     // Set memory as available
-    freed_block.process_id = 0;
+    memory_map[blockIndex].process_id = 0;
 
     // Merging with memory before the freed blockindex
     if (memory_map[blockIndex - 1].process_id == 0 && blockIndex >= 1)
