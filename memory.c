@@ -94,7 +94,7 @@ struct MEMORY_BLOCK first_fit_allocate(int request_size, struct MEMORY_BLOCK mem
         for (int x = blockIndex + 2; x < *map_cnt; x++)
         {
             memory_map[x] = memory_map[x - 1];
-        }
+        };
         newBlock.process_id = 0;
         newBlock.start_address = memory_map[blockIndex].start_address + request_size;
         newBlock.end_address = memory_map[blockIndex].end_address;
