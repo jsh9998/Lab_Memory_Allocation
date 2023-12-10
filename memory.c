@@ -27,7 +27,7 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
     int blockIndex = -1;
     for (int x = 0; x < *map_cnt; x++)
     {
-        if (memory_map[x].segment_size >= request_size && memory_map[x].process_id == 0)
+        if ((memory_map[x].segment_size >= request_size) && (memory_map[x].process_id == 0))
         {
             if (blockIndex == -1 || memory_map[x].segment_size < memory_map[blockIndex].segment_size)
             {
