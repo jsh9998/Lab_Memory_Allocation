@@ -88,6 +88,12 @@ struct MEMORY_BLOCK first_fit_allocate(int request_size, struct MEMORY_BLOCK mem
     }
 
     // Split the block if needed
+    if (memory_map[blockIndex].segment_size == request_size)
+    {
+        memory_map[blockIndex].process_id = process_id;
+        return memory_map[blockIndex];
+    }
+
     if (memory_map[blockIndex].segment_size > request_size)
     {
         (*map_cnt)++;
