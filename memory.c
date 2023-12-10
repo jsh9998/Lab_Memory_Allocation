@@ -13,6 +13,8 @@ struct MEMORY_BLOCK nullBlockCreation()
     nullblock.process_id = 0;
     nullblock.segment_size = 0;
     nullblock.start_address = 0;
+
+    return nullblock;
 }
 
 struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memory_map[MAPMAX], int *map_cnt, int process_id)
@@ -37,7 +39,7 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
             memory_map[x].process_id = process_id;
             memory_map[x].segment_size = request_size;
 
-                        int excessMemory = memory_map[x].segment_size - request_size;
+            int excessMemory = memory_map[x].segment_size - request_size;
             newBlock.segment_size = excessMemory;
             newBlock.start_address = memory_map[x].end_address + 1;
 
